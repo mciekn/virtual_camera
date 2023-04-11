@@ -1,7 +1,9 @@
 package pl.gk.virtual_camera;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -9,14 +11,13 @@ import java.io.IOException;
 public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Parent root = FXMLLoader.load(Application.class.getResource("hello-view.fxml"));
         stage.setTitle("Virtual Camera");
-        stage.setScene(scene);
+        stage.setScene(new Scene(root, 650, 650));
         stage.show();
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }

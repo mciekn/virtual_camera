@@ -3,7 +3,7 @@ package pl.gk.virtual_camera;
 import java.util.ArrayList;
 
 public class Rectangle3D {
-    ArrayList<Point3D> point3DList= new ArrayList<Point3D>();
+    ArrayList<Point3D> point3DList= new ArrayList<>();
 
     public Rectangle3D(Point3D pointA, Point3D pointB, Point3D pointC, Point3D pointD){
         point3DList.add(pointA);
