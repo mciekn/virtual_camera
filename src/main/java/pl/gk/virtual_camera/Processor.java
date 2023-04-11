@@ -69,4 +69,29 @@ public class Processor {
         }
     }
 
+    public void changeRotation(double change, String axis) {
+        change = Math.toRadians(change);
+        for (Rectangle3D rectangle3D : this.rectangle3DList) {
+            for (Point3D point3D : rectangle3D.getPoint3DList()) {
+                double x = point3D.getX();
+                double y = point3D.getY();
+                double z = point3D.getZ();
+                switch (axis) {
+                    case "x":
+                        point3D.setY(Math.cos(change) * y - Math.sin(change) * z);
+                        point3D.setZ(Math.sin(change) * y + Math.cos(change) * z);
+                        break;
+                    case "y":
+                        point3D.setX(Math.cos(change) * x + Math.sin(change) * z);
+                        point3D.setZ(-Math.sin(change) * x + Math.cos(change) * z);
+                        break;
+                    case "z":
+                        point3D.setX(Math.cos(change) * x - Math.sin(change) * y);
+                        point3D.setY(Math.sin(change) * x + Math.cos(change) * y);
+                        break;
+                }
+            }
+        }
+    }
+
 }

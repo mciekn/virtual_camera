@@ -13,6 +13,9 @@ import java.util.ArrayList;
 
 public class Controller {
 
+    private long keyCooldown = 5 * 10000000;
+    private long lastTimePressed = 0;
+
     public Canvas canvas;
 
     private Processor processor;
@@ -68,47 +71,63 @@ public class Controller {
         }
     }
 
-
-    @FXML
     public void keyEvent(KeyEvent keyEvent){
         System.out.println(keyEvent.getCode());
-        switch (keyEvent.getCode()){
-            case W:
-                //welcomeText.setText("go forward");
-                break;
-            case S:
-                //welcomeText.setText("go back");
-                break;
-            case A:
-                //welcomeText.setText("go left");
-                break;
-            case D:
-                //welcomeText.setText("go right");
-                break;
-            case Q:
-                //welcomeText.setText("rotate left");
-                break;
-            case E:
-                //welcomeText.setText("rotate right");
-                break;
-            case SHIFT:
-                //welcomeText.setText("zoom in");
-                break;
-            case CONTROL:
-                //welcomeText.setText("zoom out");
-                break;
-            case I:
-                //welcomeText.setText("turn up");
-                break;
-            case J:
-                //welcomeText.setText("turn left");
-                break;
-            case L:
-                //welcomeText.setText("turn right");
-                break;
-            case K:
-                //welcomeText.setText("turn down");
-                break;
+        if(System.nanoTime() - lastTimePressed > keyCooldown){
+            switch (keyEvent.getCode()){
+                case W:
+                    //welcomeText.setText("go forward");
+                    processor.changeTranslation(-10, "z");
+                    System.out.println("ess");
+                    break;
+                case S:
+                    //welcomeText.setText("go back");
+                    processor.changeTranslation(10, "z");
+                    break;
+                case A:
+                    //welcomeText.setText("go left");
+                    processor.changeTranslation(-10, "x");
+                    break;
+                case D:
+                    //welcomeText.setText("go right");
+                    processor.changeTranslation(10, "x");
+                    break;
+                case Q:
+                    //welcomeText.setText("rotate left");
+                    processor.changeRotation(30, "z");
+                    break;
+                case E:
+                    //welcomeText.setText("rotate right");
+                    processor.changeRotation(-30, "z");
+                    break;
+                case SHIFT:
+                    //welcomeText.setText("zoom in");
+                    processor.changeDistance(-15);
+                    break;
+                case CONTROL:
+                    processor.changeDistance(15);
+                    //welcomeText.setText("zoom out");
+                    break;
+                case I:
+                    //welcomeText.setText("turn up");
+
+                    processor.changeRotation(30, "x");
+                    break;
+                case J:
+                    processor.changeRotation(-30, "y");
+                    //welcomeText.setText("turn left");
+                    break;
+                case L:
+                    processor.changeRotation(30, "y");
+                    //welcomeText.setText("turn right");
+                    break;
+                case K:
+                    //welcomeText.setText("turn down");
+                    processor.changeRotation(-30, "x");
+                    break;
+            }
         }
+        lastTimePressed = System.nanoTime();
+        draw(processor.project());
     }
 }

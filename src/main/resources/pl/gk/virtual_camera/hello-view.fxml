@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.canvas.Canvas?>
 
-<AnchorPane fx:id="anchor" prefHeight="650.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.gk.virtual_camera.Controller">
+<AnchorPane fx:id="anchor" onKeyPressed="#keyEvent" prefHeight="650.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.gk.virtual_camera.Controller">
     <children>
         <Canvas fx:id="canvas" height="650.0" width="650.0" />
     </children>
