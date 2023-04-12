@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class Controller {
 
-    private long keyCooldown = 5 * 10000000;
     private long lastTimeKeyPressed = 0;
 
     public Canvas canvas;
@@ -70,44 +69,23 @@ public class Controller {
 
     public void keyEvent(KeyEvent keyEvent){
         System.out.println(keyEvent.getCode());
-        if(System.nanoTime() - lastTimeKeyPressed > keyCooldown){
-            switch (keyEvent.getCode()){
-                case W:
-                    processor.changeTranslation(-10, Axis.Z);
-                    break;
-                case S:
-                    processor.changeTranslation(10, Axis.Z);
-                    break;
-                case A:
-                    processor.changeTranslation(-10, Axis.X);
-                    break;
-                case D:
-                    processor.changeTranslation(10, Axis.X);
-                    break;
-                case Q:
-                    processor.changeRotation(10, Axis.Z);
-                    break;
-                case E:
-                    processor.changeRotation(-10, Axis.Z);
-                    break;
-                case SHIFT:
-                    processor.changeDistance(-15);
-                    break;
-                case CONTROL:
-                    processor.changeDistance(15);
-                    break;
-                case I:
-                    processor.changeRotation(10, Axis.X);
-                    break;
-                case J:
-                    processor.changeRotation(-10, Axis.Y);
-                    break;
-                case L:
-                    processor.changeRotation(10, Axis.Y);
-                    break;
-                case K:
-                    processor.changeRotation(-10, Axis.X);
-                    break;
+        long COOLDOWN = 50000000;
+        if(System.nanoTime() - lastTimeKeyPressed > COOLDOWN){
+            switch (keyEvent.getCode()) {
+                case W -> processor.changeTranslation(-10, Axis.Z);
+                case S -> processor.changeTranslation(10, Axis.Z);
+                case A -> processor.changeTranslation(-10, Axis.X);
+                case D -> processor.changeTranslation(10, Axis.X);
+                case R -> processor.changeTranslation(-10, Axis.Y);
+                case F -> processor.changeTranslation(10, Axis.Y);
+                case Q -> processor.changeRotation(10, Axis.Z);
+                case E -> processor.changeRotation(-10, Axis.Z);
+                case SHIFT -> processor.changeDistance(-15);
+                case CONTROL -> processor.changeDistance(15);
+                case I -> processor.changeRotation(10, Axis.X);
+                case J -> processor.changeRotation(-10, Axis.Y);
+                case L -> processor.changeRotation(10, Axis.Y);
+                case K -> processor.changeRotation(-10, Axis.X);
             }
         }
         lastTimeKeyPressed = System.nanoTime();
