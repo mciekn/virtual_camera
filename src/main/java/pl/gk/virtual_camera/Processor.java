@@ -2,6 +2,12 @@ package pl.gk.virtual_camera;
 
 import java.util.ArrayList;
 
+enum Axis{
+    X,
+    Y,
+    Z;
+}
+
 public class Processor {
 
     private ArrayList<Rectangle3D> rectangle3DList;
@@ -51,17 +57,17 @@ public class Processor {
         }
     }
 
-    public void changeTranslation(double change, String axis) {
+    public void changeTranslation(double change, Axis axis) {
         for (Rectangle3D rectangle3D : this.rectangle3DList) {
             for (Point3D point3D : rectangle3D.getPoint3DList()) {
                 switch (axis) {
-                    case "x":
+                    case X:
                         point3D.setX(point3D.getX() + change);
                         break;
-                    case "y":
+                    case Y:
                         point3D.setY(point3D.getY() + change);
                         break;
-                    case "z":
+                    case Z:
                         point3D.setZ(point3D.getZ() + change);
                         break;
                 }
@@ -69,7 +75,7 @@ public class Processor {
         }
     }
 
-    public void changeRotation(double change, String axis) {
+    public void changeRotation(double change, Axis axis) {
         change = Math.toRadians(change);
         for (Rectangle3D rectangle3D : this.rectangle3DList) {
             for (Point3D point3D : rectangle3D.getPoint3DList()) {
@@ -77,15 +83,15 @@ public class Processor {
                 double y = point3D.getY();
                 double z = point3D.getZ();
                 switch (axis) {
-                    case "x":
+                    case X:
                         point3D.setY(Math.cos(change) * y - Math.sin(change) * z);
                         point3D.setZ(Math.sin(change) * y + Math.cos(change) * z);
                         break;
-                    case "y":
+                    case Y:
                         point3D.setX(Math.cos(change) * x + Math.sin(change) * z);
                         point3D.setZ(-Math.sin(change) * x + Math.cos(change) * z);
                         break;
-                    case "z":
+                    case Z:
                         point3D.setX(Math.cos(change) * x - Math.sin(change) * y);
                         point3D.setY(Math.sin(change) * x + Math.cos(change) * y);
                         break;
