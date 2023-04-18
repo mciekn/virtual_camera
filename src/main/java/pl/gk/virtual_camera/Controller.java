@@ -7,6 +7,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
 
@@ -64,6 +65,31 @@ public class Controller {
             }
             graphicsContext.lineTo(startingPointX, startingPointY);
             graphicsContext.stroke();
+
+            List<Double> pointsX = new ArrayList();
+            List<Double> pointsY = new ArrayList();
+
+            for(Point2D point2D : rectangle2D.getPoint2DList()){
+                pointsX.add(point2D.getX());
+                pointsY.add(point2D.getY());
+            }
+
+
+            double[] arrX = pointsX.stream()
+                    .mapToDouble(Double::doubleValue)
+                    .toArray();
+
+            double[] arrY = pointsY.stream()
+                    .mapToDouble(Double::doubleValue)
+                    .toArray();
+
+            System.out.println("LEN" + pointsX.size());
+
+            if(pointsX.size() > 2){
+                graphicsContext.setFill(Color.MEDIUMSEAGREEN);
+                graphicsContext.fillPolygon(arrX, arrY, 4);
+                graphicsContext.setFill(Color.BLACK);
+            }
         }
     }
 
