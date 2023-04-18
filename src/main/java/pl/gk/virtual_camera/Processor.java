@@ -2,15 +2,15 @@ package pl.gk.virtual_camera;
 
 import java.util.ArrayList;
 
-enum Axis{
+enum Axis {
     X,
     Y,
-    Z;
+    Z
 }
 
 public class Processor {
 
-    private ArrayList<Rectangle3D> rectangle3DList;
+    private final ArrayList<Rectangle3D> rectangle3DList;
     private ArrayList<Rectangle2D> rectangle2DList;
     double distance = -200f;
 
@@ -61,15 +61,9 @@ public class Processor {
         for (Rectangle3D rectangle3D : this.rectangle3DList) {
             for (Point3D point3D : rectangle3D.getPoint3DList()) {
                 switch (axis) {
-                    case X:
-                        point3D.setX(point3D.getX() + change);
-                        break;
-                    case Y:
-                        point3D.setY(point3D.getY() + change);
-                        break;
-                    case Z:
-                        point3D.setZ(point3D.getZ() + change);
-                        break;
+                    case X -> point3D.setX(point3D.getX() + change);
+                    case Y -> point3D.setY(point3D.getY() + change);
+                    case Z -> point3D.setZ(point3D.getZ() + change);
                 }
             }
         }
@@ -83,18 +77,18 @@ public class Processor {
                 double y = point3D.getY();
                 double z = point3D.getZ();
                 switch (axis) {
-                    case X:
+                    case X -> {
                         point3D.setY(Math.cos(change) * y - Math.sin(change) * z);
                         point3D.setZ(Math.sin(change) * y + Math.cos(change) * z);
-                        break;
-                    case Y:
+                    }
+                    case Y -> {
                         point3D.setX(Math.cos(change) * x + Math.sin(change) * z);
                         point3D.setZ(-Math.sin(change) * x + Math.cos(change) * z);
-                        break;
-                    case Z:
+                    }
+                    case Z -> {
                         point3D.setX(Math.cos(change) * x - Math.sin(change) * y);
                         point3D.setY(Math.sin(change) * x + Math.cos(change) * y);
-                        break;
+                    }
                 }
             }
         }
