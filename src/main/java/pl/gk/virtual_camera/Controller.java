@@ -7,6 +7,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Controller {
@@ -17,6 +19,8 @@ public class Controller {
 
     private Processor processor;
 
+    private static double dist;
+
     @FXML
     public void initialize(){
         Reader reader = new Reader();
@@ -24,6 +28,7 @@ public class Controller {
         processor = new Processor(rectangle3DList);
         processor.changeTranslation(105, Axis.Z);
         processor.changeTranslation(-105, Axis.Y);
+        dist = processor.distance;
         processor.project();
         draw(processor.getRectangle2DList());
 
@@ -48,6 +53,7 @@ public class Controller {
         graphicsContext.setStroke(Color.MEDIUMSEAGREEN);
         graphicsContext.beginPath();
         for(Rectangle2D rectangle2D : rectangle2DList){
+
             int i = 0;
             double startingPointX = 0;
             double startingPointY = 0;
@@ -65,6 +71,8 @@ public class Controller {
             }
             graphicsContext.lineTo(startingPointX, startingPointY);
             graphicsContext.stroke();
+
+            //==========FILLING==RECTANGLES========================================
 
             List<Double> pointsX = new ArrayList();
             List<Double> pointsY = new ArrayList();
@@ -85,11 +93,19 @@ public class Controller {
 
             System.out.println("LEN" + pointsX.size());
 
-            if(pointsX.size() > 2){
-                graphicsContext.setFill(Color.MEDIUMSEAGREEN);
+
+
+                graphicsContext.setFill(Color.BEIGE);
+
                 graphicsContext.fillPolygon(arrX, arrY, 4);
-                graphicsContext.setFill(Color.BLACK);
-            }
+
+
+
+            graphicsContext.setFill(Color.BLACK);
+
+
+
+
         }
     }
 
@@ -115,6 +131,193 @@ public class Controller {
             }
         }
         lastTimeKeyPressed = System.nanoTime();
+        dist = processor.distance;
         draw(processor.project());
+
+    }
+
+    static class RectangleComparator implements Comparator<Rectangle3D>
+    {
+        @Override
+        public int compare(Rectangle3D rectangleQ, Rectangle3D rectangleP){
+            if(isOnTheOtherSideOfQ(rectangleQ, rectangleP)
+            || isOnTheSameSideOfP(rectangleQ, rectangleP)
+            || doesProjectionExcludeCovering(projectTo2D(rectangleQ), projectTo2D(rectangleP))){
+                System.out.println("true");
+                return 1;
+            }
+            else {
+                System.out.println("false");
+                return -1;
+            }
+        }
+    }
+
+
+    public static boolean doesProjectionExcludeCovering(Rectangle2D rectangleQ, Rectangle2D rectangleP){
+        for(Point2D point2D : rectangleQ.getPoint2DList()){
+            int isInsideValue = checkInside(rectangleP.getPoint2DList(), 4, point2D);
+            if(isInsideValue == 1){
+                return false;
+            }
+        }
+
+        for(Point2D point2D : rectangleP.getPoint2DList()){
+            int isInsideValue = checkInside(rectangleQ.getPoint2DList(), 4, point2D);
+            if(isInsideValue == 1){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isOnTheOtherSideOfQ(Rectangle3D rectangleQ, Rectangle3D rectangleP){
+        for(Point3D point3D : rectangleP.getPoint3DList()){
+            for(Point3D point3DQ : rectangleQ.getPoint3DList()){
+                if(point3D.getZ() <= point3DQ.getZ()){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean isOnTheSameSideOfP(Rectangle3D rectangleQ, Rectangle3D rectangleP){
+        for(Point3D point3D : rectangleQ.getPoint3DList()){
+            for(Point3D point3DP : rectangleP.getPoint3DList()){
+                if(point3D.getZ() >= point3DP.getZ()){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static Rectangle2D projectTo2D(Rectangle3D rectangle3D){
+        Rectangle2D rectangle2D = new Rectangle2D();
+        ArrayList<Point2D> point2DList = new ArrayList<>();
+
+        for(Point3D point3D : rectangle3D.getPoint3DList()){
+            double x = point3D.getX();
+            double y = point3D.getY();
+            double z = point3D.getZ();
+
+            double xProjected = ((x * dist) / (z > 1 ? z : 1)) + 325;
+            double yProjected = ((y * dist) / (z > 1 ? z : 1)) + 325;
+
+            Point2D point2D = new Point2D(xProjected, yProjected);
+            point2DList.add(point2D);
+            System.out.println("Po zmianie x:" + (xProjected) + " y " + (yProjected));
+        }
+        rectangle2D.setPoint2DList(point2DList);
+
+        return rectangle2D;
+    }
+
+
+    public static class Line {
+        public Point2D p1, p2;
+        public Line(Point2D p1, Point2D p2)
+        {
+            this.p1 = p1;
+            this.p2 = p2;
+        }
+    }
+
+    static int onLine(Line l1, Point2D p)
+    {
+        // Check whether p is on the line or not
+        if (p.getX() <= Math.max(l1.p1.getX(), l1.p2.getX())
+                && p.getX() <= Math.min(l1.p1.getX(), l1.p2.getX())
+                && (p.getY() <= Math.max(l1.p1.getY(), l1.p2.getY())
+                && p.getY() <= Math.min(l1.p1.getY(), l1.p2.getY())))
+            return 1;
+
+        return 0;
+    }
+
+    static int direction(Point2D a, Point2D b, Point2D c)
+    {
+        double val = (b.getY() - a.getY()) * (c.getX() - b.getX())
+                - (b.getX() - a.getX()) * (c.getY() - b.getY());
+
+        if (val == 0)
+
+            // Collinear
+            return 0;
+
+        else if (val < 0)
+
+            // Anti-clockwise direction
+            return 2;
+
+        // Clockwise direction
+        return 1;
+    }
+
+    static int isIntersect(Line l1, Line l2)
+    {
+        // Four direction for two lines and points of other
+        // line
+        int dir1 = direction(l1.p1, l1.p2, l2.p1);
+        int dir2 = direction(l1.p1, l1.p2, l2.p2);
+        int dir3 = direction(l2.p1, l2.p2, l1.p1);
+        int dir4 = direction(l2.p1, l2.p2, l1.p2);
+
+        // When intersecting
+        if (dir1 != dir2 && dir3 != dir4)
+            return 1;
+
+        // When p2 of line2 are on the line1
+        if (dir1 == 0 && onLine(l1, l2.p1) == 1)
+            return 1;
+
+        // When p1 of line2 are on the line1
+        if (dir2 == 0 && onLine(l1, l2.p2) == 1)
+            return 1;
+
+        // When p2 of line1 are on the line2
+        if (dir3 == 0 && onLine(l2, l1.p1) == 1)
+            return 1;
+
+        // When p1 of line1 are on the line2
+        if (dir4 == 0 && onLine(l2, l1.p2) == 1)
+            return 1;
+
+        return 0;
+    }
+
+    static int checkInside(ArrayList<Point2D> poly, int n, Point2D p)
+    {
+
+        // When polygon has less than 3 edge, it is not
+        // polygon
+
+        if (n < 3)
+            return 0;
+
+        // Create a point at infinity, y is same as point p
+        Point2D pt = new Point2D(9999, p.getY());
+        Line exline = new Line(p, pt);
+        int count = 0;
+        int i = 0;
+        do {
+
+            // Forming a line from two consecutive points of
+            // poly
+            Line side
+                    = new Line(poly.get(i), poly.get((i + 1) % n));
+            if (isIntersect(side, exline) == 1) {
+
+                // If side is intersects exline
+                if (direction(side.p1, p, side.p2) == 0)
+                    return onLine(side, p);
+                count++;
+            }
+            i = (i + 1) % n;
+        } while (i != 0);
+
+        // When count is odd
+        return count & 1;
     }
 }

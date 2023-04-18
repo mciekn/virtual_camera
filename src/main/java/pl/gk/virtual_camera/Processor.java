@@ -1,6 +1,8 @@
 package pl.gk.virtual_camera;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 enum Axis {
     X,
@@ -10,7 +12,7 @@ enum Axis {
 
 public class Processor {
 
-    private final ArrayList<Rectangle3D> rectangle3DList;
+    private ArrayList<Rectangle3D> rectangle3DList;
     private ArrayList<Rectangle2D> rectangle2DList;
     double distance = -200f;
 
@@ -21,6 +23,10 @@ public class Processor {
 
     public ArrayList<Rectangle2D> project(){
         rectangle2DList = new ArrayList<>();
+        Controller.RectangleComparator comparator = new Controller.RectangleComparator();
+        System.out.println(rectangle3DList);
+        Collections.sort(rectangle3DList, comparator);
+        System.out.println(rectangle3DList);
         for(Rectangle3D rectangle3D : rectangle3DList){
             Rectangle2D rectangle2D = new Rectangle2D();
             ArrayList<Point2D> point2DList = new ArrayList<>();
