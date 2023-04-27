@@ -57,6 +57,7 @@ public class Controller {
             int i = 0;
             double startingPointX = 0;
             double startingPointY = 0;
+            /*
             for(Point2D point2D : rectangle2D.getPoint2DList()){
                 System.out.println(i);
                 if(i==0){
@@ -71,7 +72,7 @@ public class Controller {
             }
             graphicsContext.lineTo(startingPointX, startingPointY);
             graphicsContext.stroke();
-
+            */
             //==========FILLING==RECTANGLES========================================
 
             List<Double> pointsX = new ArrayList();
@@ -95,12 +96,17 @@ public class Controller {
 
 
 
-                graphicsContext.setFill(Color.BEIGE);
+            if(pointsX.size() > 2){
+                System.out.println(rectangle2DList.indexOf(rectangle2D));
+                if(rectangle2DList.indexOf(rectangle2D) % 2 == 0){
+                    graphicsContext.setFill(Color.RED);
+                }
+                else {
+                    graphicsContext.setFill(Color.BLUE);
+                }
 
                 graphicsContext.fillPolygon(arrX, arrY, 4);
-
-
-
+            }
             graphicsContext.setFill(Color.BLACK);
 
 
