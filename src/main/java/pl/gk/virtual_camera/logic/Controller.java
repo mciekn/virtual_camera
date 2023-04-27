@@ -1,10 +1,13 @@
-package pl.gk.virtual_camera;
+package pl.gk.virtual_camera.logic;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import pl.gk.virtual_camera.model.Point2D;
+import pl.gk.virtual_camera.model.Rectangle2D;
+import pl.gk.virtual_camera.model.Rectangle3D;
 
 import java.util.ArrayList;
 import java.util.List;

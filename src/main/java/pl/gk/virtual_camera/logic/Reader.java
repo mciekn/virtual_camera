@@ -1,4 +1,7 @@
-package pl.gk.virtual_camera;
+package pl.gk.virtual_camera.logic;
+
+import pl.gk.virtual_camera.model.Point3D;
+import pl.gk.virtual_camera.model.Rectangle3D;
 
 import java.io.File;
 import java.io.FileNotFoundException;

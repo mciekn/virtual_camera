@@ -1,4 +1,9 @@
-package pl.gk.virtual_camera;
+package pl.gk.virtual_camera.logic;
+
+import pl.gk.virtual_camera.model.Point2D;
+import pl.gk.virtual_camera.model.Point3D;
+import pl.gk.virtual_camera.model.Rectangle2D;
+import pl.gk.virtual_camera.model.Rectangle3D;
 
 import java.util.ArrayList;
 

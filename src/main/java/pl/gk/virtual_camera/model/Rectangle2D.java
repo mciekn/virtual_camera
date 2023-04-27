@@ -1,4 +1,4 @@
-package pl.gk.virtual_camera;
+package pl.gk.virtual_camera.model;
 
 import java.util.ArrayList;
 

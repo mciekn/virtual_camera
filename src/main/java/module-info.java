@@ -12,4 +12,8 @@ module pl.gk.virtual_camera {
 
     opens pl.gk.virtual_camera to javafx.fxml;
     exports pl.gk.virtual_camera;
+    exports pl.gk.virtual_camera.model;
+    opens pl.gk.virtual_camera.model to javafx.fxml;
+    exports pl.gk.virtual_camera.logic;
+    opens pl.gk.virtual_camera.logic to javafx.fxml;
 }
