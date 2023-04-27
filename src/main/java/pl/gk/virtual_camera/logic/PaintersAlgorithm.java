@@ -28,7 +28,7 @@ public class PaintersAlgorithm {
 
         for (int i = 1; i < rectangle3DList.size(); i++) {
             Rectangle3D current = rectangle3DList.get(i);
-            boolean isLessThanPivot = !runTests(pivot, current, processor);
+            boolean isLessThanPivot = runTests(pivot, current, processor);
             if (isLessThanPivot) {
                 lessThanPivot.add(current);
             } else {
@@ -58,7 +58,7 @@ public class PaintersAlgorithm {
 
         boolean result = firstStep || secondStep || thirdStep || fourthStep;
 
-        return !result;
+        return result;
     }
 
     public static boolean doShapeRectangleBoundsInterfere(Rectangle2D rect_Q, Rectangle2D rect_P){
