@@ -23,6 +23,14 @@ public class PaintersAlgorithm {
         return false;
     }
 
+    public boolean doShapesInterfere(Rectangle2D rect_Q, Rectangle2D rect_P){
+        if(intersect(rect_Q, rect_P)){
+            return true;
+        }
+
+        return false;
+    }
+
     private static Rectangle2D getBounds(Rectangle2D rectangle2D){
         double left = Double.MAX_VALUE;
         double top = Double.MAX_VALUE;
