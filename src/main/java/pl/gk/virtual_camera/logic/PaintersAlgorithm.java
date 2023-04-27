@@ -7,13 +7,61 @@ import pl.gk.virtual_camera.model.Rectangle2D;
 import pl.gk.virtual_camera.model.Rectangle3D;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class PaintersAlgorithm {
 
     ArrayList<Rectangle2D> rectangle2DList;
     ArrayList<Rectangle3D> rectangle3DList;
 
-    public boolean doShapeRectangleBoundsInterfere(Rectangle2D rect_Q, Rectangle2D rect_P){
+
+    public void quickSort(ArrayList<Rectangle3D> rectangle3DList, Processor processor) {
+        if (rectangle3DList.size() <= 1) {
+            return;
+        }
+        System.out.println("sorting...");
+
+        Rectangle3D pivot = rectangle3DList.get(0);
+        ArrayList<Rectangle3D> lessThanPivot = new ArrayList<>();
+        ArrayList<Rectangle3D> greaterThanPivot = new ArrayList<>();
+
+        for (int i = 1; i < rectangle3DList.size(); i++) {
+            Rectangle3D current = rectangle3DList.get(i);
+            boolean isLessThanPivot = !runTests(pivot, current, processor);
+            if (isLessThanPivot) {
+                lessThanPivot.add(current);
+            } else {
+                greaterThanPivot.add(current);
+            }
+        }
+
+        quickSort(lessThanPivot, processor);
+        quickSort(greaterThanPivot, processor);
+
+        rectangle3DList.clear();
+        rectangle3DList.addAll(lessThanPivot);
+        rectangle3DList.add(pivot);
+        rectangle3DList.addAll(greaterThanPivot);
+    }
+
+
+
+
+    public static boolean runTests(Rectangle3D rect_Q, Rectangle3D rect_P, Processor processor){
+        Rectangle2D rect_Q2D = processor.projectTo2D(rect_Q);
+        Rectangle2D rect_P2D = processor.projectTo2D(rect_P);
+        boolean firstStep = doShapeRectangleBoundsInterfere(rect_Q2D, rect_P2D);
+        boolean secondStep = doShapesInterfere(rect_Q2D, rect_P2D);
+        boolean thirdStep = isOnOppositeSide(rect_Q, rect_P);
+        boolean fourthStep = isOnSameSide(rect_Q, rect_P);
+
+        boolean result = firstStep || secondStep || thirdStep || fourthStep;
+
+        return !result;
+    }
+
+    public static boolean doShapeRectangleBoundsInterfere(Rectangle2D rect_Q, Rectangle2D rect_P){
         Rectangle2D rect_Q_bounds = getBounds(rect_Q);
         Rectangle2D rect_P_bounds = getBounds(rect_P);
 
@@ -24,15 +72,14 @@ public class PaintersAlgorithm {
         return false;
     }
 
-    public boolean doShapesInterfere(Rectangle2D rect_Q, Rectangle2D rect_P){
+    public static boolean doShapesInterfere(Rectangle2D rect_Q, Rectangle2D rect_P){
         if(intersect(rect_Q, rect_P)){
             return true;
         }
-
         return false;
     }
 
-    public boolean isOnOppositeSide(Rectangle3D rect_Q, Rectangle3D rect_P){
+    public static boolean isOnOppositeSide(Rectangle3D rect_Q, Rectangle3D rect_P){
         Point3D p1 = rect_Q.getPoint3DList().get(0);
         Point3D p2 = rect_Q.getPoint3DList().get(1);
         Point3D p3 = rect_Q.getPoint3DList().get(2);
@@ -58,7 +105,7 @@ public class PaintersAlgorithm {
         return true;
     }
 
-    public boolean isOnSameSide(Rectangle3D rect_Q, Rectangle3D rect_P){
+    public static boolean isOnSameSide(Rectangle3D rect_Q, Rectangle3D rect_P){
         Point3D p1 = rect_Q.getPoint3DList().get(0);
         Point3D p2 = rect_Q.getPoint3DList().get(1);
         Point3D p3 = rect_Q.getPoint3DList().get(2);
