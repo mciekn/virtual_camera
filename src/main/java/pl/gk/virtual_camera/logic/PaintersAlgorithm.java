@@ -58,6 +58,32 @@ public class PaintersAlgorithm {
         return true;
     }
 
+    public boolean isOnSameSide(Rectangle3D rect_Q, Rectangle3D rect_P){
+        Point3D p1 = rect_Q.getPoint3DList().get(0);
+        Point3D p2 = rect_Q.getPoint3DList().get(1);
+        Point3D p3 = rect_Q.getPoint3DList().get(2);
+
+        Point3D vector_1 = new Point3D(p2.getX() - p1.getX(), p2.getY() - p1.getY(), p2.getZ() - p1.getZ());
+        Point3D vector_2 = new Point3D(p3.getX() - p1.getX(), p3.getY() - p1.getY(), p3.getZ() - p1.getZ());
+
+        Point3D vector_normal = new Point3D(vector_1.getY()*vector_2.getZ() - vector_1.getZ()*vector_2.getY(),
+                vector_1.getZ()*vector_2.getX() - vector_1.getX()*vector_2.getZ(),
+                vector_1.getX()*vector_2.getY() - vector_1.getY()*vector_2.getX());
+
+        for (Point3D point3D : rect_P.getPoint3DList()){
+            Point3D vector = new Point3D(point3D.getX(), point3D.getY(), point3D.getZ());
+            double dotProduct = vector.getX() * vector_normal.getX() +
+                    vector.getY() * vector_normal.getY() +
+                    vector.getZ() * vector_normal.getZ();
+
+            if (dotProduct > 0){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private static Rectangle2D getBounds(Rectangle2D rectangle2D){
         double left = Double.MAX_VALUE;
         double top = Double.MAX_VALUE;
