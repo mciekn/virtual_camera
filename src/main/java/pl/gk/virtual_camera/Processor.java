@@ -2,12 +2,6 @@ package pl.gk.virtual_camera;
 
 import java.util.ArrayList;
 
-enum Axis {
-    X,
-    Y,
-    Z
-}
-
 public class Processor {
 
     private final ArrayList<Rectangle3D> rectangle3DList;

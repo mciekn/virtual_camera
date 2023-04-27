@@ -66,8 +66,8 @@ public class Controller {
             graphicsContext.lineTo(startingPointX, startingPointY);
             graphicsContext.stroke();
 
-            List<Double> pointsX = new ArrayList();
-            List<Double> pointsY = new ArrayList();
+            List<Double> pointsX = new ArrayList<>();
+            List<Double> pointsY = new ArrayList<>();
 
             for(Point2D point2D : rectangle2D.getPoint2DList()){
                 pointsX.add(point2D.getX());
