@@ -50,6 +50,11 @@ public class Controller {
         graphicsContext.fillRect(0, 0, 650, 650);
         graphicsContext.setStroke(Color.MEDIUMSEAGREEN);
         graphicsContext.beginPath();
+
+        PaintersAlgorithm paintersAlgorithm = new PaintersAlgorithm();
+
+        paintersAlgorithm.doShapeRectangleBoundsInterfere(rectangle2DList.get(0), rectangle2DList.get(1));
+
         for(Rectangle2D rectangle2D : rectangle2DList){
             int i = 0;
             double startingPointX = 0;
@@ -89,10 +94,19 @@ public class Controller {
             System.out.println("LEN" + pointsX.size());
 
             if(pointsX.size() > 2){
-                graphicsContext.setFill(Color.MEDIUMSEAGREEN);
+                if(rectangle2DList.indexOf(rectangle2D) == 0){
+                    graphicsContext.setFill(Color.RED);
+                }
+                else if(rectangle2DList.indexOf(rectangle2D) == 1){
+                    graphicsContext.setFill(Color.BLUE);
+                }
+                else{
+                    graphicsContext.setFill(Color.BEIGE);
+                }
+
                 graphicsContext.fillPolygon(arrX, arrY, 4);
-                graphicsContext.setFill(Color.BLACK);
             }
+            graphicsContext.setFill(Color.BLACK);
         }
     }
 
