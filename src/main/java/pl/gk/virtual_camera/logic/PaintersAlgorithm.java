@@ -9,6 +9,7 @@ import pl.gk.virtual_camera.model.Rectangle3D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class PaintersAlgorithm {
 
@@ -55,6 +56,8 @@ public class PaintersAlgorithm {
         boolean secondStep = doShapesInterfere(rect_Q2D, rect_P2D);
         boolean thirdStep = isOnOppositeSide(rect_Q, rect_P);
         boolean fourthStep = isOnSameSide(rect_Q, rect_P);
+        //fourthStep = false;
+        //firstStep = false;
 
         boolean result = firstStep || secondStep || thirdStep || fourthStep;
 
@@ -79,10 +82,16 @@ public class PaintersAlgorithm {
         return false;
     }
 
-    public static boolean isOnOppositeSide(Rectangle3D rect_Q, Rectangle3D rect_P){
-        Point3D p1 = rect_Q.getPoint3DList().get(0);
-        Point3D p2 = rect_Q.getPoint3DList().get(1);
-        Point3D p3 = rect_Q.getPoint3DList().get(2);
+    public static boolean isOnOppositeSide(Rectangle3D rect_Q, Rectangle3D rect_P) {
+        List<Point3D> points_Q = rect_Q.getPoint3DList();
+        if (points_Q.size() < 3) {
+            // handle the case when rect_Q has less than 3 points
+            return false;
+        }
+
+        Point3D p1 = points_Q.get(0);
+        Point3D p2 = points_Q.get(1);
+        Point3D p3 = points_Q.get(2);
 
         Point3D vector_1 = new Point3D(p2.getX() - p1.getX(), p2.getY() - p1.getY(), p2.getZ() - p1.getZ());
         Point3D vector_2 = new Point3D(p3.getX() - p1.getX(), p3.getY() - p1.getY(), p3.getZ() - p1.getZ());
@@ -91,11 +100,11 @@ public class PaintersAlgorithm {
                 vector_1.getZ()*vector_2.getX() - vector_1.getX()*vector_2.getZ(),
                 vector_1.getX()*vector_2.getY() - vector_1.getY()*vector_2.getX());
 
-        for (Point3D point3D : rect_P.getPoint3DList()){
-            Point3D vector = new Point3D(point3D.getX(), point3D.getY(), point3D.getZ());
-            double dotProduct = vector.getX() * vector_normal.getX() +
-                                vector.getY() * vector_normal.getY() +
-                                vector.getZ() * vector_normal.getZ();
+        for (Point3D point_P : rect_P.getPoint3DList()){
+            Point3D vector_P = new Point3D(point_P.getX() - p1.getX(), point_P.getY() - p1.getY(), point_P.getZ() - p1.getZ());
+            double dotProduct = vector_P.getX() * vector_normal.getX() +
+                    vector_P.getY() * vector_normal.getY() +
+                    vector_P.getZ() * vector_normal.getZ();
 
             if (dotProduct > 0){
                 return false;
@@ -105,10 +114,17 @@ public class PaintersAlgorithm {
         return true;
     }
 
+
     public static boolean isOnSameSide(Rectangle3D rect_Q, Rectangle3D rect_P){
-        Point3D p1 = rect_Q.getPoint3DList().get(0);
-        Point3D p2 = rect_Q.getPoint3DList().get(1);
-        Point3D p3 = rect_Q.getPoint3DList().get(2);
+        List<Point3D> points_Q = rect_Q.getPoint3DList();
+        if (points_Q.size() < 3) {
+            // handle the case when rect_Q has less than 3 points
+            return false;
+        }
+
+        Point3D p1 = points_Q.get(0);
+        Point3D p2 = points_Q.get(1);
+        Point3D p3 = points_Q.get(2);
 
         Point3D vector_1 = new Point3D(p2.getX() - p1.getX(), p2.getY() - p1.getY(), p2.getZ() - p1.getZ());
         Point3D vector_2 = new Point3D(p3.getX() - p1.getX(), p3.getY() - p1.getY(), p3.getZ() - p1.getZ());
@@ -117,18 +133,18 @@ public class PaintersAlgorithm {
                 vector_1.getZ()*vector_2.getX() - vector_1.getX()*vector_2.getZ(),
                 vector_1.getX()*vector_2.getY() - vector_1.getY()*vector_2.getX());
 
-        for (Point3D point3D : rect_P.getPoint3DList()){
-            Point3D vector = new Point3D(point3D.getX(), point3D.getY(), point3D.getZ());
-            double dotProduct = vector.getX() * vector_normal.getX() +
-                    vector.getY() * vector_normal.getY() +
-                    vector.getZ() * vector_normal.getZ();
+        for (Point3D point_P : rect_P.getPoint3DList()){
+            Point3D vector_P = new Point3D(point_P.getX() - p1.getX(), point_P.getY() - p1.getY(), point_P.getZ() - p1.getZ());
+            double dotProduct = vector_P.getX() * vector_normal.getX() +
+                    vector_P.getY() * vector_normal.getY() +
+                    vector_P.getZ() * vector_normal.getZ();
 
-            if (dotProduct > 0){
-                return true;
+            if (dotProduct < 0){
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     private static Rectangle2D getBounds(Rectangle2D rectangle2D){
