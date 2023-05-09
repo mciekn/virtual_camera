@@ -47,6 +47,9 @@ dependencies {
     implementation('eu.hansolo:tilesfx:17.1.15') {
         exclude(group: 'org.openjfx')
     }
+    testImplementation('eu.hansolo:tilesfx:17.1.15') {
+        exclude(group: 'org.openjfx')
+    }
     implementation('com.github.almasb:fxgl:17.2') {
         exclude(group: 'org.openjfx')
     }

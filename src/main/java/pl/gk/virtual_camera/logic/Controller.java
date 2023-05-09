@@ -27,8 +27,7 @@ public class Controller {
         processor = new Processor(rectangle3DList);
         processor.changeTranslation(105, Axis.Z);
         processor.changeTranslation(-105, Axis.Y);
-        processor.project();
-        draw(processor.getRectangle2DList());
+        draw(processor.project());
 
         canvas.setOnMouseClicked(e -> {
             double x = e.getX() - 325.0;
