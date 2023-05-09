@@ -53,11 +53,14 @@ dependencies {
     implementation('com.github.almasb:fxgl:17.2') {
         exclude(group: 'org.openjfx')
     }
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     testImplementation 'org.assertj:assertj-core:3.23.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.0.0-M4'
+    implementation 'org.apache.commons:commons-math3:3.6.1'
 }
 
 test {

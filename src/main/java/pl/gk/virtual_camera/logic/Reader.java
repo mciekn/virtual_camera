@@ -19,8 +19,8 @@ public class Reader {
                 String line = rectangleDataScanner.nextLine().replace("\\s+", "");
                 String[] pointsArray = line.split(";");
                 ArrayList<Point3D> rectanglePoints = new ArrayList<>();
-                for (String pointCoordinatesString : pointsArray) {
-                    String[] pointCoordinatesArray = pointCoordinatesString.split(",");
+                for (int i =0; i <4; i++) {
+                    String[] pointCoordinatesArray =pointsArray[i].split(",");
                     double x = Double.parseDouble(pointCoordinatesArray[0]);
                     double y = Double.parseDouble(pointCoordinatesArray[1]);
                     double z = Double.parseDouble(pointCoordinatesArray[2]);

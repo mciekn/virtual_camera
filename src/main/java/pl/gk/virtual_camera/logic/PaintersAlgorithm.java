@@ -8,8 +8,9 @@ import pl.gk.virtual_camera.model.Rectangle3D;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class PaintersAlgorithm {
+    private static final int COMPARE_LESS_THAN = -1;
+    private static final int COMPARE_MORE_THAN = 1;
 
     ArrayList<Rectangle2D> rectangle2DList;
     ArrayList<Rectangle3D> rectangle3DList;
@@ -77,6 +78,32 @@ public class PaintersAlgorithm {
         }
 
         return false;
+    }
+
+    public static int paintingEliminationComparator(Rectangle3D p, Rectangle3D q, Processor processor)
+    {
+        var projectedQ = processor.projectTo2D(q);
+        var projectedP = processor.projectTo2D(p);
+        if(doShapeRectangleBoundsExcludeInterference(projectedP, projectedQ))
+        {
+            return COMPARE_LESS_THAN;
+        }
+        if(doShapesExcludeInterference(projectedP, projectedQ))
+        {
+            return COMPARE_LESS_THAN;
+        }
+
+        if(isOnOppositeSide(p,q))
+        {
+            return COMPARE_LESS_THAN;
+        }
+        if (isOnOppositeSide(q,p))
+        {
+            return COMPARE_LESS_THAN;
+        }
+
+
+        return COMPARE_MORE_THAN;
     }
 
     public static boolean doShapeRectangleBoundsExcludeInterference(Rectangle2D rect_Q, Rectangle2D rect_P){
@@ -149,6 +176,17 @@ public class PaintersAlgorithm {
         }
 
         return true;
+    }
+
+    public static boolean isFirstOnTheOppositeSideFromObserverDividedBySecondPlane(Rectangle3D p, Rectangle3D q)
+    {
+        var qPoints = q.getPoint3DList();
+        var plane = new Plane()
+        Point3D v1 = qPoints.get(0);
+        Point3D v2 = qPoints.get(1);
+        Point3D v3 = qPoints.get(2);
+
+
     }
 
     private static Rectangle2D getBounds(Rectangle2D rectangle2D){

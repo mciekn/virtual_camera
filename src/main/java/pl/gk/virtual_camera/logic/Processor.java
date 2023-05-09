@@ -6,6 +6,7 @@ import pl.gk.virtual_camera.model.Rectangle2D;
 import pl.gk.virtual_camera.model.Rectangle3D;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Processor {
 
@@ -31,8 +32,9 @@ public class Processor {
     public ArrayList<Rectangle2D> project(){
         rectangle2DList = new ArrayList<>();
         paintersAlgorithm.quickSort(rectangle3DList, this);
+        var sortedList = rectangle3DList.stream().sorted((q,p) -> PaintersAlgorithm.paintingEliminationComparator(q,p,this)).toList();
         //invertArrayList(rectangle3DList);
-        for(Rectangle3D rectangle3D : rectangle3DList){
+        for(Rectangle3D rectangle3D : sortedList){
             Rectangle2D rectangle2D = new Rectangle2D();
             ArrayList<Point2D> point2DList = new ArrayList<>();
 
@@ -51,6 +53,7 @@ public class Processor {
             rectangle2D.setPoint2DList(point2DList);
             rectangle2DList.add(rectangle2D);
         }
+        //Collections.reverse(rectangle2DList);
         return rectangle2DList;
     }
 
