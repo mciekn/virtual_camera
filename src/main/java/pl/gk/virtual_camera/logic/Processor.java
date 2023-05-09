@@ -21,7 +21,13 @@ public class Processor {
 
     public ArrayList<Rectangle2D> project(){
         rectangle2DList = new ArrayList<>();
-        paintersAlgorithm.quickSort(rectangle3DList, this);
+
+        for(int i =0; i < 1000; i++){
+            paintersAlgorithm.quickSort(rectangle3DList, this);
+            //paintersAlgorithm.sort(rectangle3DList, this);
+        }
+        //paintersAlgorithm.quickSort(rectangle3DList, this);
+        //paintersAlgorithm.sort(rectangle3DList, this);
         for(Rectangle3D rectangle3D : rectangle3DList){
             Rectangle2D rectangle2D = new Rectangle2D();
             ArrayList<Point2D> point2DList = new ArrayList<>();

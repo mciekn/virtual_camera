@@ -46,6 +46,39 @@ public class PaintersAlgorithm {
         rectangle3DList.addAll(greaterThanPivot);
     }
 
+    public void sort(ArrayList<Rectangle3D> rectangle3DList, Processor processor) {
+        int length = rectangle3DList.size();
+
+        for(int i = 0; i < length - 1; i++){
+            for(int j = 0; j < length - i - 1; j++){
+                Rectangle3D rectangle_Q = rectangle3DList.get(j);
+                Rectangle3D rectangle_P = rectangle3DList.get(j+1);
+                boolean result_first = runTests(rectangle_Q, rectangle_P, processor);
+
+                if(result_first == false){
+                    Rectangle3D temp = rectangle_Q;
+                    rectangle3DList.set(j, rectangle_P);
+                    rectangle3DList.set(j+1, temp);
+                }
+
+                //teraz test powtórny czy się nie robi peepeepoopoo
+            }
+        }
+
+        //invertArrayList(rectangle3DList);
+
+    }
+
+    public static void invertArrayList(ArrayList<Rectangle3D> list) {
+        int size = list.size();
+        for (int i = 0; i < size / 2; i++) {
+            Rectangle3D temp = list.get(i);
+            list.set(i, list.get(size - i - 1));
+            list.set(size - i - 1, temp);
+        }
+    }
+
+
 
 
 
@@ -56,8 +89,8 @@ public class PaintersAlgorithm {
         boolean secondStep = doShapesInterfere(rect_Q2D, rect_P2D);
         boolean thirdStep = isOnOppositeSide(rect_Q, rect_P);
         boolean fourthStep = isOnSameSide(rect_Q, rect_P);
-        //fourthStep = false;
-        //firstStep = false;
+        firstStep = false;
+        secondStep = false;
 
         boolean result = firstStep || secondStep || thirdStep || fourthStep;
 
@@ -84,10 +117,6 @@ public class PaintersAlgorithm {
 
     public static boolean isOnOppositeSide(Rectangle3D rect_Q, Rectangle3D rect_P) {
         List<Point3D> points_Q = rect_Q.getPoint3DList();
-        if (points_Q.size() < 3) {
-            // handle the case when rect_Q has less than 3 points
-            return false;
-        }
 
         Point3D p1 = points_Q.get(0);
         Point3D p2 = points_Q.get(1);

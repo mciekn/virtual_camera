@@ -28,7 +28,7 @@ public class Controller {
         processor.changeTranslation(105, Axis.Z);
         processor.changeTranslation(-105, Axis.Y);
         processor.project();
-        draw(processor.getRectangle2DList());
+        draw(processor.project());
 
         canvas.setOnMouseClicked(e -> {
             double x = e.getX() - 325.0;
@@ -94,13 +94,17 @@ public class Controller {
 
             if(pointsX.size() > 2){
                 System.out.println(rectangle2DList.indexOf(rectangle2D));
-                if(rectangle2DList.indexOf(rectangle2D) % 2 == 0){
+
+                if(rectangle2DList.indexOf(rectangle2D) %2 == 0){
                     graphicsContext.setFill(Color.RED);
+                }
+                else if(rectangle2DList.indexOf(rectangle2D) %3 == 0){
+                    graphicsContext.setFill(Color.GREEN);
                 }
                 else {
                     graphicsContext.setFill(Color.BLUE);
                 }
-
+                //graphicsContext.setFill(Color.BLUE);
                 graphicsContext.fillPolygon(arrX, arrY, 4);
             }
             graphicsContext.setFill(Color.BLACK);
@@ -118,14 +122,14 @@ public class Controller {
                 case D -> processor.changeTranslation(10, Axis.X);
                 case R -> processor.changeTranslation(-10, Axis.Y);
                 case F -> processor.changeTranslation(10, Axis.Y);
-                case Q -> processor.changeRotation(10, Axis.Z);
-                case E -> processor.changeRotation(-10, Axis.Z);
+                case Q -> processor.changeRotation(30, Axis.Z);
+                case E -> processor.changeRotation(-30, Axis.Z);
                 case SHIFT -> processor.changeDistance(-15);
                 case CONTROL -> processor.changeDistance(15);
-                case I -> processor.changeRotation(10, Axis.X);
-                case J -> processor.changeRotation(-10, Axis.Y);
-                case L -> processor.changeRotation(10, Axis.Y);
-                case K -> processor.changeRotation(-10, Axis.X);
+                case I -> processor.changeRotation(30, Axis.X);
+                case J -> processor.changeRotation(-30, Axis.Y);
+                case L -> processor.changeRotation(30, Axis.Y);
+                case K -> processor.changeRotation(-30, Axis.X);
             }
         }
         lastTimeKeyPressed = System.nanoTime();
