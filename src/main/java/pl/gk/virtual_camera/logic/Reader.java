@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Reader {
-    public ArrayList<Rectangle3D> readRectanglesData(){
-        File rectangleData = new File("src/main/resources/pl/gk/virtual_camera/data.txt");
+    public static ArrayList<Rectangle3D> readRectanglesData(String pathToFile){
+        File rectangleData = new File(pathToFile);
         ArrayList<Rectangle3D> rectangle3DList = new ArrayList<>();
         try(Scanner rectangleDataScanner = new Scanner(rectangleData)){
             while (rectangleDataScanner.hasNext()){

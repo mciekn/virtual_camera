@@ -23,7 +23,7 @@ public class Controller {
     @FXML
     public void initialize(){
         Reader reader = new Reader();
-        ArrayList<Rectangle3D> rectangle3DList = reader.readRectanglesData();
+        ArrayList<Rectangle3D> rectangle3DList = reader.readRectanglesData("src/main/resources/pl/gk/virtual_camera/data.txt");
         processor = new Processor(rectangle3DList);
         processor.changeTranslation(105, Axis.Z);
         processor.changeTranslation(-105, Axis.Y);

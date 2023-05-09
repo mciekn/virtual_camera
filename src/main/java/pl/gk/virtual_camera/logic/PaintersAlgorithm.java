@@ -1,6 +1,6 @@
 package pl.gk.virtual_camera.logic;
 
-import javafx.scene.shape.Shape;
+import kotlin.NotImplementedError;
 import pl.gk.virtual_camera.model.Point2D;
 import pl.gk.virtual_camera.model.Point3D;
 import pl.gk.virtual_camera.model.Rectangle2D;
@@ -44,8 +44,10 @@ public class PaintersAlgorithm {
         rectangle3DList.addAll(greaterThanPivot);
     }
 
-
-
+    public void sortRectangles(ArrayList<Rectangle3D> rectangle3DList, Processor processor)
+    {
+        throw new NotImplementedError();
+    }
 
     public static boolean runTests(Rectangle3D rect_Q, Rectangle3D rect_P, Processor processor){
         Rectangle2D rect_Q2D = processor.projectTo2D(rect_Q);
