@@ -60,7 +60,7 @@ public class Controller {
         int colorIterator = 0;
         int i = 0;
         for(Rectangle2D rectangle2D : rectangle2DList){
-            int i = 0;
+
             double startingPointX = 0;
             double startingPointY = 0;
             /*
@@ -98,13 +98,7 @@ public class Controller {
 
             if(pointsX.size() > 2){
                 System.out.println(rectangle2DList.indexOf(rectangle2D));
-                if(rectangle2DList.indexOf(rectangle2D) % 2 == 0){
-                    graphicsContext.setFill(Color.RED);
-                }
-                else {
-                    graphicsContext.setFill(Color.BLUE);
-                }
-
+                graphicsContext.setFill(colors.get(i));
                 graphicsContext.fillPolygon(arrX, arrY, 4);
             }
             i++;
@@ -136,6 +130,6 @@ public class Controller {
             }
         }
         lastTimeKeyPressed = System.nanoTime();
-        draw(processor.project());
+        draw(processor.project(), colors);
     }
 }

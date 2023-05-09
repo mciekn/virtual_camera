@@ -18,6 +18,8 @@ class PaintersAlgorithmTest {
     void setUp() {
         testData = Reader.readRectanglesData("src/test/resources/data.txt");
         processor = new Processor(testData);
+        processor.changeTranslation(105, Axis.Z);
+        processor.changeTranslation(-105, Axis.Y);
     }
 
     @AfterEach

@@ -19,9 +19,19 @@ public class Processor {
         this.rectangle3DList = rectangle3DList;
     }
 
+    public static void invertArrayList(ArrayList<Rectangle3D> list) {
+        int size = list.size();
+        for (int i = 0; i < size / 2; i++) {
+            Rectangle3D temp = list.get(i);
+            list.set(i, list.get(size - i - 1));
+            list.set(size - i - 1, temp);
+        }
+    }
+
     public ArrayList<Rectangle2D> project(){
         rectangle2DList = new ArrayList<>();
         paintersAlgorithm.quickSort(rectangle3DList, this);
+        //invertArrayList(rectangle3DList);
         for(Rectangle3D rectangle3D : rectangle3DList){
             Rectangle2D rectangle2D = new Rectangle2D();
             ArrayList<Point2D> point2DList = new ArrayList<>();
