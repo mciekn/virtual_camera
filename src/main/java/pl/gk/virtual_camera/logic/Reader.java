@@ -26,7 +26,9 @@ public class Reader {
                     double z = Double.parseDouble(pointCoordinatesArray[2]);
                     Point3D point3D = new Point3D(x, y, z);
 
-                    rectanglePoints.add(point3D);
+                    if(rectanglePoints.size() < 4){
+                        rectanglePoints.add(point3D);
+                    }
                 }
                 rectangle3D.setPoint3DList(rectanglePoints);
                 rectangle3DList.add(rectangle3D);
