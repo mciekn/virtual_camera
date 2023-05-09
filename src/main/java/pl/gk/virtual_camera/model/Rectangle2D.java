@@ -36,8 +36,7 @@ public class Rectangle2D {
             maxY = Math.max(maxY, point2D.getY());
         }
 
-        return (point.getX() > minX && point.getX() < maxX &&
-                point.getY() > minY && point.getY() < maxY);
+        return (point.getX() >= minX && point.getX() <= maxX && point.getY() >= minY && point.getY() <= maxY);
     }
 
 }

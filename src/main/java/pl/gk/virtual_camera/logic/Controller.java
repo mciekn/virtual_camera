@@ -20,14 +20,18 @@ public class Controller {
 
     private Processor processor;
 
+    private ArrayList<Color> colors;
+
     @FXML
     public void initialize(){
         Reader reader = new Reader();
         ArrayList<Rectangle3D> rectangle3DList = reader.readRectanglesData("src/main/resources/pl/gk/virtual_camera/data.txt");
+        var loadedColors = reader.readRectanglesColors("src/main/resources/pl/gk/virtual_camera/data.txt");
+        colors = loadedColors;
         processor = new Processor(rectangle3DList);
         processor.changeTranslation(105, Axis.Z);
         processor.changeTranslation(-105, Axis.Y);
-        draw(processor.project());
+        draw(processor.project(),colors);
 
         canvas.setOnMouseClicked(e -> {
             double x = e.getX() - 325.0;
@@ -41,7 +45,7 @@ public class Controller {
     }
 
 
-    public void draw(ArrayList<Rectangle2D> rectangle2DList){
+    public void draw(ArrayList<Rectangle2D> rectangle2DList, ArrayList<Color> colors){
         System.out.println("drawing...");
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
         graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -53,7 +57,8 @@ public class Controller {
         //PaintersAlgorithm paintersAlgorithm = new PaintersAlgorithm();
 
         //paintersAlgorithm.doShapeRectangleBoundsInterfere(rectangle2DList.get(0), rectangle2DList.get(1));
-
+        int colorIterator = 0;
+        int i = 0;
         for(Rectangle2D rectangle2D : rectangle2DList){
             int i = 0;
             double startingPointX = 0;
@@ -102,14 +107,17 @@ public class Controller {
 
                 graphicsContext.fillPolygon(arrX, arrY, 4);
             }
+            i++;
             graphicsContext.setFill(Color.BLACK);
         }
     }
 
     public void keyEvent(KeyEvent keyEvent){
         System.out.println(keyEvent.getCode());
+        draw(processor.project(), colors);
         long COOLDOWN = 50000000;
         if(System.nanoTime() - lastTimeKeyPressed > COOLDOWN){
+            draw(processor.project(), colors);
             switch (keyEvent.getCode()) {
                 case W -> processor.changeTranslation(-10, Axis.Z);
                 case S -> processor.changeTranslation(10, Axis.Z);

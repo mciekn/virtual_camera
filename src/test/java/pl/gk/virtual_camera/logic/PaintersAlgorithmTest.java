@@ -42,6 +42,7 @@ class PaintersAlgorithmTest {
 
     @Test
     void doShapeRectangleBoundsInterfere() {
+        //done
         // given
         var q = processor.projectTo2D(testData.get(0));
         var p = processor.projectTo2D(testData.get(1));

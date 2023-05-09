@@ -57,9 +57,26 @@ public class PaintersAlgorithm {
         boolean thirdStep = isOnOppositeSide(rect_Q, rect_P);
         boolean fourthStep = isOnSameSide(rect_Q, rect_P);
 
-        boolean result = firstStep || secondStep || thirdStep || fourthStep;
+        if(doShapeRectangleBoundsExcludeInterference(rect_Q2D,rect_P2D))
+        {
+            return true;
+        }
 
-        return result;
+        if(doShapesExcludeInterference(rect_Q2D,rect_P2D))
+        {
+            return true;
+        }
+
+        if(isOnOppositeSide(rect_Q,rect_Q))
+        {
+            return true;
+        }
+        if (isOnSameSide(rect_Q,rect_P))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public static boolean doShapeRectangleBoundsExcludeInterference(Rectangle2D rect_Q, Rectangle2D rect_P){
@@ -70,10 +87,7 @@ public class PaintersAlgorithm {
     }
 
     public static boolean doShapesExcludeInterference(Rectangle2D rect_Q, Rectangle2D rect_P){
-        if(intersect(rect_Q, rect_P)){
-            return false;
-        }
-        return true;
+        return !intersect(rect_Q, rect_P);
     }
 
     public static boolean isOnOppositeSide(Rectangle3D rect_Q, Rectangle3D rect_P) {
@@ -139,15 +153,15 @@ public class PaintersAlgorithm {
 
     private static Rectangle2D getBounds(Rectangle2D rectangle2D){
         double left = Double.MAX_VALUE;
-        double top = Double.MAX_VALUE;
+        double top = Double.MIN_VALUE;
         double right = Double.MIN_VALUE;
-        double bottom = Double.MIN_VALUE;
+        double bottom = Double.MAX_VALUE;
 
         for(Point2D point2D : rectangle2D.getPoint2DList()){
             left = Math.min(left, point2D.getX());
-            top = Math.min(top, point2D.getY());
+            top = Math.max(top, point2D.getY());
             right = Math.max(right, point2D.getX());
-            bottom = Math.max(bottom, point2D.getY());
+            bottom = Math.min(bottom, point2D.getY());
         }
 
         return new Rectangle2D(new Point2D(left, top), new Point2D(right, top), new Point2D(right, bottom), new Point2D(left, bottom));
