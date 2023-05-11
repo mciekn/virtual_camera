@@ -10,6 +10,8 @@ module pl.gk.virtual_camera {
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
     requires org.junit.jupiter.api;
+    requires Jama;
+    requires jama;
 
     opens pl.gk.virtual_camera to javafx.fxml;
     exports pl.gk.virtual_camera;

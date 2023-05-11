@@ -178,16 +178,7 @@ public class PaintersAlgorithm {
         return true;
     }
 
-    public static boolean isFirstOnTheOppositeSideFromObserverDividedBySecondPlane(Rectangle3D p, Rectangle3D q)
-    {
-        var qPoints = q.getPoint3DList();
-        var plane = new Plane()
-        Point3D v1 = qPoints.get(0);
-        Point3D v2 = qPoints.get(1);
-        Point3D v3 = qPoints.get(2);
 
-
-    }
 
     private static Rectangle2D getBounds(Rectangle2D rectangle2D){
         double left = Double.MAX_VALUE;

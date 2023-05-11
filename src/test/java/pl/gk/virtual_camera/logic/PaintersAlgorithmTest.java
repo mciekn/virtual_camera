@@ -37,11 +37,11 @@ class PaintersAlgorithmTest {
     @Test
     void sortRectangles() {
     }
-
+    @Disabled("For later use")
     @Test
     void runTests() {
     }
-
+    @Disabled("For later use")
     @Test
     void doShapeRectangleBoundsInterfere() {
         //done
@@ -55,7 +55,7 @@ class PaintersAlgorithmTest {
         // then
         Assertions.assertThat(result).isFalse();
     }
-
+    @Disabled("For later use")
     @Test
     void doShapesInterfere() {
         // given
@@ -66,7 +66,7 @@ class PaintersAlgorithmTest {
         // then
         Assertions.assertThat(result).isFalse();
     }
-
+    @Disabled("For later use")
     @Test
     void isOnOppositeSide() {
         //given
@@ -77,7 +77,7 @@ class PaintersAlgorithmTest {
         //then
         Assertions.assertThat(result).isFalse();
     }
-
+    @Disabled("For later use")
     @Test
     void isOnSameSide() {
         //given

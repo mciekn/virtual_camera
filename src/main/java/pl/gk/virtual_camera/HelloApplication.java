@@ -8,10 +8,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Application extends javafx.application.Application {
+public class HelloApplication extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(Application.class.getResource("hello-view.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("hello-view.fxml")));
         stage.setTitle("Virtual Camera");
         stage.setScene(new Scene(root, 650, 650));
         stage.show();
