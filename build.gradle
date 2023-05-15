@@ -14,7 +14,7 @@ repositories {
 }
 
 ext {
-    junitVersion = '5.9.1'
+    junitVersion = '5.9.3'
 }
 
 sourceCompatibility = '18'
@@ -31,12 +31,12 @@ application {
 
 javafx {
     version = '18.0.2'
-    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.media']
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.media', 'javafx.swing']
 }
 
 dependencies {
     implementation('org.controlsfx:controlsfx:11.1.2')
-    implementation('com.dlsc.formsfx:formsfx-core:11.5.0') {
+    implementation('com.dlsc.formsfx:formsfx-core:11.6.0') {
         exclude(group: 'org.openjfx')
     }
     implementation('net.synedra:validatorfx:0.4.0') {
@@ -44,15 +44,27 @@ dependencies {
     }
     implementation('org.kordamp.ikonli:ikonli-javafx:12.3.1')
     implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
-    implementation('eu.hansolo:tilesfx:17.1.15') {
+    implementation('eu.hansolo:tilesfx:17.1.17') {
+        exclude(group: 'org.openjfx')
+    }
+    implementation 'com.blogspot.ostas:Jama:1.0.2'
+    implementation 'com.blogspot.ostas:Jama-Parent:1.0.2'
+    implementation 'gov.nist.math:jama:1.0.3'
+    testImplementation('eu.hansolo:tilesfx:17.1.17') {
         exclude(group: 'org.openjfx')
     }
     implementation('com.github.almasb:fxgl:17.2') {
         exclude(group: 'org.openjfx')
     }
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.2'
+    // https://mvnrepository.com/artifact/gov.nist.math/jama
+    //implementation 'gov.nist.math:jama:1.0.3'
 }
 
 test {

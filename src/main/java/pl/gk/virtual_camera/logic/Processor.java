@@ -1,12 +1,11 @@
-package pl.gk.virtual_camera;
+package pl.gk.virtual_camera.logic;
+
+import pl.gk.virtual_camera.model.Point2D;
+import pl.gk.virtual_camera.model.Point3D;
+import pl.gk.virtual_camera.model.Rectangle2D;
+import pl.gk.virtual_camera.model.Rectangle3D;
 
 import java.util.ArrayList;
-
-enum Axis {
-    X,
-    Y,
-    Z
-}
 
 public class Processor {
 
@@ -19,9 +18,16 @@ public class Processor {
         this.rectangle3DList = rectangle3DList;
     }
 
+
     public ArrayList<Rectangle2D> project(){
         rectangle2DList = new ArrayList<>();
         for(Rectangle3D rectangle3D : rectangle3DList){
+            rectangle3D.setProcessor(this);
+        }
+        rectangle3DList.sort(Rectangle3D::compareTo);
+        //rectangle3DList.sort(Rectangle3D::compareTo);
+        var sortedList = rectangle3DList;
+        for(Rectangle3D rectangle3D : sortedList){
             Rectangle2D rectangle2D = new Rectangle2D();
             ArrayList<Point2D> point2DList = new ArrayList<>();
 
@@ -38,9 +44,30 @@ public class Processor {
                 System.out.println("Po zmianie x:" + (xProjected) + " y " + (yProjected));
             }
             rectangle2D.setPoint2DList(point2DList);
+            rectangle2D.setIndex(rectangle3D.getIndex());
             rectangle2DList.add(rectangle2D);
         }
         return rectangle2DList;
+    }
+
+    public Rectangle2D projectTo2D(Rectangle3D rectangle3D){
+        Rectangle2D rectangle2D = new Rectangle2D();
+        ArrayList<Point2D> point2DList = new ArrayList<>();
+
+        for(Point3D point3D : rectangle3D.getPoint3DList()){
+            double x = point3D.getX();
+            double y = point3D.getY();
+            double z = point3D.getZ();
+
+            double xProjected = ((x * distance) / (z > 1 ? z : 1)) + 325;
+            double yProjected = ((y * distance) / (z > 1 ? z : 1)) + 325;
+
+            Point2D point2D = new Point2D(xProjected, yProjected);
+            point2DList.add(point2D);
+        }
+        rectangle2D.setPoint2DList(point2DList);
+
+        return rectangle2D;
     }
 
     public ArrayList<Rectangle2D> getRectangle2DList() {
