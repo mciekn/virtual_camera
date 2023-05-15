@@ -21,22 +21,14 @@ public class Processor {
         this.rectangle3DList = rectangle3DList;
     }
 
-    public static void invertArrayList(ArrayList<Rectangle3D> list) {
-        int size = list.size();
-        for (int i = 0; i < size / 2; i++) {
-            Rectangle3D temp = list.get(i);
-            list.set(i, list.get(size - i - 1));
-            list.set(size - i - 1, temp);
-        }
-    }
 
     public ArrayList<Rectangle2D> project(){
         rectangle2DList = new ArrayList<>();
-        //paintersAlgorithm.quickSort(rectangle3DList, this);
-        //var sortedList = rectangle3DList.stream().sorted((q,p) -> PaintersAlgorithm.paintingEliminationComparator(q,p,this)).toList();
-        //invertArrayList(rectangle3DList);
+        for(Rectangle3D rectangle3D : rectangle3DList){
+            rectangle3D.setProcessor(this);
+        }
         rectangle3DList.sort(Rectangle3D::compareTo);
-        rectangle3DList.sort(Rectangle3D::compareTo);
+        //rectangle3DList.sort(Rectangle3D::compareTo);
         var sortedList = rectangle3DList;
         for(Rectangle3D rectangle3D : sortedList){
             Rectangle2D rectangle2D = new Rectangle2D();
@@ -55,9 +47,9 @@ public class Processor {
                 System.out.println("Po zmianie x:" + (xProjected) + " y " + (yProjected));
             }
             rectangle2D.setPoint2DList(point2DList);
+            rectangle2D.setIndex(rectangle3D.getIndex());
             rectangle2DList.add(rectangle2D);
         }
-        //Collections.reverse(rectangle2DList);
         return rectangle2DList;
     }
 

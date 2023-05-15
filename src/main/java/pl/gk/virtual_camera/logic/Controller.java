@@ -98,7 +98,7 @@ public class Controller {
 
             if(pointsX.size() > 2){
                 System.out.println(rectangle2DList.indexOf(rectangle2D));
-                graphicsContext.setFill(colors.get(i));
+                graphicsContext.setFill(colors.get(rectangle2D.getIndex()));
                 graphicsContext.fillPolygon(arrX, arrY, 4);
             }
             i++;

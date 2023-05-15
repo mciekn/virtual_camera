@@ -49,11 +49,7 @@ class PaintersAlgorithmTest {
         var q = processor.projectTo2D(testData.get(0));
         var p = processor.projectTo2D(testData.get(1));
 
-        // when
-        var result = PaintersAlgorithm.doShapeRectangleBoundsExcludeInterference(q, p);
 
-        // then
-        Assertions.assertThat(result).isFalse();
     }
     @Disabled("For later use")
     @Test

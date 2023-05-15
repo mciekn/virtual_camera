@@ -14,6 +14,7 @@ public class Reader {
         File rectangleData = new File(pathToFile);
         ArrayList<Rectangle3D> rectangle3DList = new ArrayList<>();
         try (Scanner rectangleDataScanner = new Scanner(rectangleData)) {
+            int index = 0;
             while (rectangleDataScanner.hasNext()) {
                 Rectangle3D rectangle3D = new Rectangle3D();
                 String line = rectangleDataScanner.nextLine().replace("\\s+", "");
@@ -29,7 +30,9 @@ public class Reader {
                     rectanglePoints.add(point3D);
                 }
                 rectangle3D.setPoint3DList(rectanglePoints);
+                rectangle3D.setIndex(index);
                 rectangle3DList.add(rectangle3D);
+                index++;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
