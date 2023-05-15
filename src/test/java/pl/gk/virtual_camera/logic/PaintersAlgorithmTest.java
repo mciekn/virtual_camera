@@ -5,11 +5,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.Arguments;
 import pl.gk.virtual_camera.model.Rectangle3D;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
 class PaintersAlgorithmTest {
     ArrayList<Rectangle3D> testData;
@@ -20,6 +18,9 @@ class PaintersAlgorithmTest {
         processor = new Processor(testData);
         processor.changeTranslation(105, Axis.Z);
         processor.changeTranslation(-105, Axis.Y);
+        for(Rectangle3D rectangle3D : testData){
+            rectangle3D.setProcessor(processor);
+        }
     }
 
     @AfterEach
@@ -27,21 +28,6 @@ class PaintersAlgorithmTest {
 
     }
 
-    @Disabled("For later use")
-    @Test
-    void quickSort() {
-
-    }
-
-    @Disabled("For later use")
-    @Test
-    void sortRectangles() {
-    }
-    @Disabled("For later use")
-    @Test
-    void runTests() {
-    }
-    @Disabled("For later use")
     @Test
     void doShapeRectangleBoundsInterfere() {
         //done
@@ -51,7 +37,6 @@ class PaintersAlgorithmTest {
 
 
     }
-    @Disabled("For later use")
     @Test
     void doShapesInterfere() {
         // given
@@ -62,26 +47,17 @@ class PaintersAlgorithmTest {
         // then
         Assertions.assertThat(result).isFalse();
     }
-    @Disabled("For later use")
-    @Test
-    void isOnOppositeSide() {
-        //given
-        var q = testData.get(0);
-        var p = testData.get(1);
-        //when
-        var result = PaintersAlgorithm.isOnOppositeSide(q,p);
-        //then
-        Assertions.assertThat(result).isFalse();
-    }
-    @Disabled("For later use")
+
     @Test
     void isOnSameSide() {
         //given
         var q = testData.get(0);
         var p = testData.get(1);
+
         //when
-        var result = PaintersAlgorithm.isOnSameSide(q,p);
+        var result = ObstructionDetector.isPointOnObserverSide(q, p.getCenter());
+
         //then
-        Assertions.assertThat(result).isFalse();
+        Assertions.assertThat(result).isEqualTo(1);
     }
 }

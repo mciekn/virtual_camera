@@ -42,24 +42,22 @@ public class Reader {
 
     public static ArrayList<Color> readRectanglesColors(String pathToFile) {
         File rectangleData = new File(pathToFile);
-        var rectangle3DList = new ArrayList<Color>();
+        var rectangleColorList = new ArrayList<Color>();
         try (Scanner rectangleDataScanner = new Scanner(rectangleData)) {
             while (rectangleDataScanner.hasNext()) {
-                Rectangle3D rectangle3D = new Rectangle3D();
                 String line = rectangleDataScanner.nextLine().replace("\\s+", "");
                 String[] pointsArray = line.split(";");
-                ArrayList<Point3D> rectanglePoints = new ArrayList<>();
-                    String[] pointCoordinatesArray = pointsArray[4].split(",");
-                    double x = Integer.parseInt(pointCoordinatesArray[0].trim())/255;
-                    double y = Integer.parseInt(pointCoordinatesArray[1].trim())/255;
-                    double z = Integer.parseInt(pointCoordinatesArray[2].trim())/255;
-                    var wallColor = new Color(x, y, z, 1.);
-                    rectangle3DList.add(wallColor);
+                String[] pointCoordinatesArray = pointsArray[4].split(",");
+                double x = Integer.parseInt(pointCoordinatesArray[0].trim())/255;
+                double y = Integer.parseInt(pointCoordinatesArray[1].trim())/255;
+                double z = Integer.parseInt(pointCoordinatesArray[2].trim())/255;
+                var wallColor = new Color(x, y, z, 1.);
+                rectangleColorList.add(wallColor);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return rectangle3DList;
+        return rectangleColorList;
 
     }
 }

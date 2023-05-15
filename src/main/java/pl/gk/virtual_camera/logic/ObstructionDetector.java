@@ -8,15 +8,9 @@ import java.util.ArrayList;
 
 public class ObstructionDetector {
 
-    /*  FUNCTIONS FOR SORTING CUBE WALLS BASED ON PLANE SET BY OTHER WALL.
-        IF A WALL AND OBSERVER ARE ON THE SAME SIDE OF THE PLANE SET BY OTHER WALL,
-        IT MEANS THIS WALL COVERS THE OTHER.
-    */
     public static Matrix getPlaneFromPolygon(Rectangle3D rectangle3D) {
 
         ArrayList<Point3D> point3DList = rectangle3D.getPoint3DList();
-
-        //Point[] polygonVertices = polygon.getVertices();
 
         double x1 = point3DList.get(0).getX();
         double y1 = point3DList.get(0).getY();

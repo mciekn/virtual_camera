@@ -54,31 +54,7 @@ public class Controller {
         graphicsContext.setStroke(Color.MEDIUMSEAGREEN);
         graphicsContext.beginPath();
 
-        //PaintersAlgorithm paintersAlgorithm = new PaintersAlgorithm();
-
-        //paintersAlgorithm.doShapeRectangleBoundsInterfere(rectangle2DList.get(0), rectangle2DList.get(1));
-        int colorIterator = 0;
-        int i = 0;
         for(Rectangle2D rectangle2D : rectangle2DList){
-
-            double startingPointX = 0;
-            double startingPointY = 0;
-            /*
-            for(Point2D point2D : rectangle2D.getPoint2DList()){
-                System.out.println(i);
-                if(i==0){
-                    startingPointX = point2D.getX();
-                    startingPointY = point2D.getY();
-                    graphicsContext.moveTo(point2D.getX(), point2D.getY());
-                }
-                else{
-                    graphicsContext.lineTo(point2D.getX(), point2D.getY());
-                }
-                i++;
-            }
-            graphicsContext.lineTo(startingPointX, startingPointY);
-            graphicsContext.stroke();
-            */
             List<Double> pointsX = new ArrayList<>();
             List<Double> pointsY = new ArrayList<>();
 
@@ -86,7 +62,6 @@ public class Controller {
                 pointsX.add(point2D.getX());
                 pointsY.add(point2D.getY());
             }
-
 
             double[] arrX = pointsX.stream()
                     .mapToDouble(Double::doubleValue)
@@ -96,12 +71,9 @@ public class Controller {
                     .mapToDouble(Double::doubleValue)
                     .toArray();
 
-            if(pointsX.size() > 2){
-                System.out.println(rectangle2DList.indexOf(rectangle2D));
-                graphicsContext.setFill(colors.get(rectangle2D.getIndex()));
-                graphicsContext.fillPolygon(arrX, arrY, 4);
-            }
-            i++;
+            graphicsContext.setFill(colors.get(rectangle2D.getIndex()));
+            graphicsContext.fillPolygon(arrX, arrY, 4);
+
             graphicsContext.setFill(Color.BLACK);
         }
     }

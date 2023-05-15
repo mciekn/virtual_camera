@@ -6,14 +6,11 @@ import pl.gk.virtual_camera.model.Rectangle2D;
 import pl.gk.virtual_camera.model.Rectangle3D;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class Processor {
 
     private final ArrayList<Rectangle3D> rectangle3DList;
     private ArrayList<Rectangle2D> rectangle2DList;
-    PaintersAlgorithm paintersAlgorithm = new PaintersAlgorithm();
     double distance = -200f;
 
 
